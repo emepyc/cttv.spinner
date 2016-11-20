@@ -1,17 +1,14 @@
 
 var gulp   = require('gulp');
 var jshint = require('gulp-jshint');
-var mocha = require('gulp-mocha');
 var watch = require('gulp-watch');
 var uglify = require('gulp-uglify');
 var browserify = require('gulp-browserify');
 var sass = require("gulp-sass");
-//var karma = require("gulp-karma");
-var karma = require("karma").server;
 
 // gulp helper
 var gzip = require('gulp-gzip');
-var clean = require('gulp-rimraf');
+var del = require('del');
 var rename = require('gulp-rename');
 
 // path tools
@@ -31,8 +28,7 @@ var outputFilePath = join(buildDir,outputFileSt);
 var outputFileMinSt = outputFile + ".min.js";
 var outputFileMin = join(buildDir,outputFileMinSt);
 
-// a failing test breaks the whole build chain
-gulp.task('default', ['lint', 'test', 'build-browser', 'build-browser-gzip']);
+gulp.task('default', ['lint', 'build-browser', 'build-browser-gzip']);
 
 gulp.task('sass', function () {
     return gulp.src('./index.scss')
@@ -49,15 +45,6 @@ gulp.task('lint', function() {
     .pipe(jshint.reporter('default'));
 });
 
-gulp.task('test', ['build-browser'], function(done) {
-    karma.start({
-	configFile: __dirname + '/karma.conf.js',
-	singleRun: true
-    }, function() {
-	done();
-    });
-});
-
 gulp.task('watch', function() {
     gulp.watch(['./src/**/*.js','./src/**/scss/*.scss','./lib/**/*.js','./test/**/*.js'], ['build-browser', 'test', 'lint']);
 });
@@ -65,7 +52,7 @@ gulp.task('watch', function() {
 
 // will remove everything in build
 gulp.task('clean', function() {
-  return gulp.src(buildDir).pipe(clean());
+  return del([buildDir]);
 });
 
 // just makes sure that the build dir exists
