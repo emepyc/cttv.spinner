@@ -71,7 +71,7 @@ gulp.task('build-browser',['init', 'sass'], function() {
 });
 
 // browserify min
-gulp.task('build-browser-min',['init', 'sass'], function() {
+gulp.task('build-browser-min',['build-browser'], function() {
   return gulp.src(browserFile)
   .pipe(browserify({}))
   .pipe(uglify())
@@ -87,3 +87,4 @@ gulp.task('build-browser-gzip', ['build-browser-min', 'sass'], function() {
 });
 
 
+gulp.task('build-all', ['build-browser-gzip']);
