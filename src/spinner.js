@@ -23,7 +23,7 @@ var spinner = function () {
     	    .append("g");
 
 
-        var arc = d3.svg.arc()
+        var arc = d3.arc()
             .innerRadius(offset - conf.stroke)
             .outerRadius(offset)
             .startAngle(0) //converting from degs to radians
