@@ -1,6 +1,6 @@
 {
   "name": "cttv.spinner",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "CTTV spinner in SVG format",
   "main": "index.js",
   "directories": {
